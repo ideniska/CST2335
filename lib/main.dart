@@ -1,81 +1,333 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const LoginPage(),
-    );
-  }
-}
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _passwordController = TextEditingController();
-  var imageSource = "images/question-mark.png";
-
-  void _login() {
-    setState(() {
-      if (_passwordController.text == "QWERTY123") {
-        imageSource = "images/idea.png";
-      } else {
-        imageSource = "images/stop.png";
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Login Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Login name',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Center(child: Text('BROWSE CATEGORIES', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Not sure about exactly which recipe you\'re looking for? Do a search, or dive into our most popular categories.'),
               ),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
+              Center(child: Text('BY MEAT', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/beef.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'BEEF',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(-1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/chicken.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'CHICKEN',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(-1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/pork.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'PORK',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(-1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/seafood.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'SEAFOOD',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(-1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, -1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.5, 1.5),
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 20),
-            Image.asset(
-              imageSource,
-              width: 300,
-              height: 300,
-            ),
-          ],
+              Center(child: Text('BY COURSE', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/main_dishes.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Main Dishes',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/salad.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Salad Recipes',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/side_dishes.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Side Dishes',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/crockpot.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Crockpot',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Center(child: Text('BY DESSERT', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/icecream.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Ice Cream',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/brownies.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Brownies',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/pies.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Pies',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      ClipOval(
+                        child: Image.asset('images/cookies.jpg', width: 80, height: 80, fit: BoxFit.cover),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                        child: Text(
+                          'Cookies',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

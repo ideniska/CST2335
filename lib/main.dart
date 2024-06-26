@@ -1,123 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_flutter3/second.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(Lab6());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class Lab6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: '/',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: const LoginPage(),
-      debugShowCheckedModeBanner: false,
+      home: ToDoList(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
+class ToDoList extends StatefulWidget {
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _ToDoListState createState() => _ToDoListState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _loginController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  var imageSource = "images/question-mark.png";
-  bool _credentialsSaved = false;
+class _ToDoListState extends State<ToDoList> {
+  final List<String> words = [];
+  final TextEditingController textController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadSavedCredentials();
-  }
-
-  void _loadSavedCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedLogin = prefs.getString('login');
-    final savedPassword = prefs.getString('password');
-
-    if (savedLogin != null && savedPassword != null) {
-      _loginController.text = savedLogin;
-      _passwordController.text = savedPassword;
-      _credentialsSaved = true;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Previous login name and password loaded.'),
-          action: SnackBarAction(
-            label: 'Clear Saved Data',
-            onPressed: _clearSavedData,
-          ),
-        ),
-      );
-    }
-  }
-
-  void _clearSavedData() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('login');
-    prefs.remove('password');
-    _loginController.clear();
-    _passwordController.clear();
-    _credentialsSaved = false;
-  }
-
-  void _login() {
+  void addItem() {
     setState(() {
-      if (_passwordController.text == "QWERTY123") {
-        imageSource = "images/idea.png";
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProfilePage(loginName: _loginController.text)),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Welcome Back ${_loginController.text}')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Incorrect password')),
-        );
-        imageSource = "images/stop.png";
-      }
+      words.add(textController.text);
+      textController.clear();
     });
-
-    if (!_credentialsSaved) {
-      _showSaveDialog();
-    }
   }
 
-  void _showSaveDialog() {
+  void removeItem(int index) {
+    setState(() {
+      words.removeAt(index);
+    });
+  }
+
+  void showDeleteDialog(int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Save Credentials'),
-          content: const Text('Would you like to save your login name and password for next time?'),
+          title: Text('Delete Item'),
+          content: Text('Do you want to delete this item?'),
           actions: <Widget>[
             TextButton(
+              child: Text('No'),
               onPressed: () {
-                _saveCredentials();
                 Navigator.of(context).pop();
               },
-              child: const Text('Yes'),
             ),
             TextButton(
+              child: Text('Yes'),
               onPressed: () {
-                _clearSavedData();
+                removeItem(index);
                 Navigator.of(context).pop();
               },
-              child: const Text('No'),
             ),
           ],
         );
@@ -125,49 +62,54 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _saveCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('login', _loginController.text);
-    prefs.setString('password', _passwordController.text);
-    _credentialsSaved = true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Page'),
+        title: Text('To Do List'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _loginController,
-              decoration: const InputDecoration(
-                labelText: 'Login name',
-              ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: addItem,
+                  child: Text('Add item'),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter a todo item',
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
+          ),
+          Expanded(
+            child: words.isEmpty
+                ? Center(child: Text('There are no items in the list'))
+                : ListView.builder(
+              itemCount: words.length,
+              itemBuilder: (context, rowNum) {
+                return GestureDetector(
+                  onLongPress: () => showDeleteDialog(rowNum),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Row number: ${rowNum + 1}"),
+                      Text(words[rowNum]),
+                    ],
+                  ),
+                );
+              },
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 20),
-            Image.asset(
-              imageSource,
-              width: 300,
-              height: 300,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
